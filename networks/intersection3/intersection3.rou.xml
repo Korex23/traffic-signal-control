@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <!-- Vehicle type -->
+    <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
+
+    <!-- Routes -->
+    <route id="NS" edges="N2C C2S"/>
+    <route id="SN" edges="S2C C2N"/>
+    <route id="EW" edges="E2C C2W"/>
+    <route id="WE" edges="W2C C2E"/>
+
+    <!-- Vehicles - low demand ~200/hr -->
+    <flow id="flow_NS" type="car" route="NS" begin="0" end="3600" vehsPerHour="50"/>
+    <flow id="flow_SN" type="car" route="SN" begin="0" end="3600" vehsPerHour="50"/>
+    <flow id="flow_EW" type="car" route="EW" begin="0" end="3600" vehsPerHour="50"/>
+    <flow id="flow_WE" type="car" route="WE" begin="0" end="3600" vehsPerHour="50"/>
+</routes>

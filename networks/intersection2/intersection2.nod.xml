@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <node id="C"  x="0"    y="0"    type="traffic_light"/>
+    <node id="N"  x="0"    y="150"  type="dead_end"/>
+    <node id="S"  x="0"    y="-150" type="dead_end"/>
+    <node id="E"  x="150"  y="0"    type="dead_end"/>
+    <node id="W"  x="-150" y="0"    type="dead_end"/>
+    <node id="NE" x="106"  y="106"  type="dead_end"/>
+    <node id="SW" x="-106" y="-106" type="dead_end"/>
+</nodes>

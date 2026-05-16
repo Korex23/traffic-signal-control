@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- N-S primary road - 3 lanes -->
+    <edge id="N2C"  from="N"  to="C"  numLanes="3" speed="13.89"/>
+    <edge id="C2N"  from="C"  to="N"  numLanes="3" speed="13.89"/>
+    <edge id="S2C"  from="S"  to="C"  numLanes="3" speed="13.89"/>
+    <edge id="C2S"  from="C"  to="S"  numLanes="3" speed="13.89"/>
+
+    <!-- E-W - 2 lanes -->
+    <edge id="E2C"  from="E"  to="C"  numLanes="2" speed="13.89"/>
+    <edge id="C2E"  from="C"  to="E"  numLanes="2" speed="13.89"/>
+    <edge id="W2C"  from="W"  to="C"  numLanes="2" speed="13.89"/>
+    <edge id="C2W"  from="C"  to="W"  numLanes="2" speed="13.89"/>
+
+    <!-- NE-SW diagonals - 2 lanes -->
+    <edge id="NE2C" from="NE" to="C"  numLanes="2" speed="13.89"/>
+    <edge id="C2NE" from="C"  to="NE" numLanes="2" speed="13.89"/>
+    <edge id="SW2C" from="SW" to="C"  numLanes="2" speed="13.89"/>
+    <edge id="C2SW" from="C"  to="SW" numLanes="2" speed="13.89"/>
+</edges>
