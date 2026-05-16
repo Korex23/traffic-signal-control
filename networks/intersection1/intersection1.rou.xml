@@ -10,8 +10,8 @@
     <route id="WE" edges="W2C C2E"/>
 
     <!-- Vehicles - low demand ~200/hr -->
-    <flow id="flow_NS" type="car" route="NS" begin="0" end="3600" vehsPerHour="50"/>
-    <flow id="flow_SN" type="car" route="SN" begin="0" end="3600" vehsPerHour="50"/>
-    <flow id="flow_EW" type="car" route="EW" begin="0" end="3600" vehsPerHour="50"/>
-    <flow id="flow_WE" type="car" route="WE" begin="0" end="3600" vehsPerHour="50"/>
+    <flow id="flow_NS" type="car" route="NS" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_SN" type="car" route="SN" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_EW" type="car" route="EW" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_WE" type="car" route="WE" begin="0" end="999999" vehsPerHour="50"/>
 </routes>

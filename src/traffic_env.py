@@ -116,6 +116,9 @@ class TrafficEnv(gym.Env):
                 "--no-warnings",
                 "--no-step-log",
                 "--random",
+	        "--time-to-teleport", "-1",
+    		"--end", "999999",
+    		"--quit-on-end", "false",
             ]
             traci.start(sumo_cmd, port=port, label=f"int{i+1}")
             print(f"Started SUMO instance {i+1} on port {port}")
