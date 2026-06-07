@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- ══════════════════════════ -->
+    <!-- ZONE 1: City Centre links  -->
+    <!-- ══════════════════════════ -->
+    <edge id="C1_C2" from="C1" to="C2" numLanes="3" speed="13.89"/>
+    <edge id="C2_C1" from="C2" to="C1" numLanes="3" speed="13.89"/>
+    <edge id="C1_C3" from="C1" to="C3" numLanes="3" speed="13.89"/>
+    <edge id="C3_C1" from="C3" to="C1" numLanes="3" speed="13.89"/>
+    <edge id="C1_C4" from="C1" to="C4" numLanes="3" speed="13.89"/>
+    <edge id="C4_C1" from="C4" to="C1" numLanes="3" speed="13.89"/>
+    <edge id="C1_C5" from="C1" to="C5" numLanes="3" speed="13.89"/>
+    <edge id="C5_C1" from="C5" to="C1" numLanes="3" speed="13.89"/>
+
+    <!-- Zone 1 outer arms -->
+    <edge id="C2_N2C" from="C2_N" to="C2" numLanes="2" speed="13.89"/>
+    <edge id="C2_C2N" from="C2" to="C2_N" numLanes="2" speed="13.89"/>
+    <edge id="C2_W2C" from="C2_W" to="C2" numLanes="2" speed="13.89"/>
+    <edge id="C2_C2W" from="C2" to="C2_W" numLanes="2" speed="13.89"/>
+    <edge id="C2_E2C" from="C2_E" to="C2" numLanes="2" speed="13.89"/>
+    <edge id="C2_C2E" from="C2" to="C2_E" numLanes="2" speed="13.89"/>
+    <edge id="C3_N2C" from="C3_N" to="C3" numLanes="2" speed="13.89"/>
+    <edge id="C3_C3N" from="C3" to="C3_N" numLanes="2" speed="13.89"/>
+    <edge id="C3_S2C" from="C3_S" to="C3" numLanes="2" speed="13.89"/>
+    <edge id="C3_C3S" from="C3" to="C3_S" numLanes="2" speed="13.89"/>
+    <edge id="C3_W2C" from="C3_W" to="C3" numLanes="3" speed="13.89"/>
+    <edge id="C3_C3W" from="C3" to="C3_W" numLanes="3" speed="13.89"/>
+    <edge id="C4_N2C" from="C4_N" to="C4" numLanes="2" speed="13.89"/>
+    <edge id="C4_C4N" from="C4" to="C4_N" numLanes="2" speed="13.89"/>
+    <edge id="C4_S2C" from="C4_S" to="C4" numLanes="2" speed="13.89"/>
+    <edge id="C4_C4S" from="C4" to="C4_S" numLanes="2" speed="13.89"/>
+    <edge id="C5_S2C" from="C5_S" to="C5" numLanes="2" speed="13.89"/>
+    <edge id="C5_C5S" from="C5" to="C5_S" numLanes="2" speed="13.89"/>
+    <edge id="C5_W2C" from="C5_W" to="C5" numLanes="2" speed="13.89"/>
+    <edge id="C5_C5W" from="C5" to="C5_W" numLanes="2" speed="13.89"/>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- ZONE 2: Commercial District links          -->
+    <!-- ══════════════════════════════════════════ -->
+    <edge id="D1_D2" from="D1" to="D2" numLanes="2" speed="13.89"/>
+    <edge id="D2_D1" from="D2" to="D1" numLanes="2" speed="13.89"/>
+    <edge id="D1_D3" from="D1" to="D3" numLanes="3" speed="13.89"/>
+    <edge id="D3_D1" from="D3" to="D1" numLanes="3" speed="13.89"/>
+    <edge id="D1_D4" from="D1" to="D4" numLanes="3" speed="13.89"/>
+    <edge id="D4_D1" from="D4" to="D1" numLanes="3" speed="13.89"/>
+    <edge id="D1_D5" from="D1" to="D5" numLanes="2" speed="13.89"/>
+    <edge id="D5_D1" from="D5" to="D1" numLanes="2" speed="13.89"/>
+    <edge id="D1_D6" from="D1" to="D6" numLanes="2" speed="13.89"/>
+    <edge id="D6_D1" from="D6" to="D1" numLanes="2" speed="13.89"/>
+    <edge id="D1_D7" from="D1" to="I7" numLanes="1" speed="13.89"/>
+    <edge id="D7_D1" from="I7" to="D1" numLanes="2" speed="13.89"/>
+
+    <!-- Zone 2 outer arms -->
+    <edge id="D2_N2C" from="D2_N" to="D2" numLanes="2" speed="13.89"/>
+    <edge id="D2_C2N" from="D2" to="D2_N" numLanes="2" speed="13.89"/>
+    <edge id="D2_W2C" from="D2_W" to="D2" numLanes="1" speed="13.89"/>
+    <edge id="D2_C2W" from="D2" to="D2_W" numLanes="1" speed="13.89"/>
+    <edge id="D2_E2C" from="D2_E" to="D2" numLanes="2" speed="13.89"/>
+    <edge id="D2_C2E" from="D2" to="D2_E" numLanes="2" speed="13.89"/>
+    <edge id="D3_N2C" from="D3_N" to="D3" numLanes="2" speed="13.89"/>
+    <edge id="D3_C3N" from="D3" to="D3_N" numLanes="2" speed="13.89"/>
+    <edge id="D3_NW2C" from="D3_NW" to="D3" numLanes="1" speed="13.89"/>
+    <edge id="D3_C3NW" from="D3" to="D3_NW" numLanes="1" speed="13.89"/>
+    <edge id="D4_N2C" from="D4_N" to="D4" numLanes="1" speed="13.89"/>
+    <edge id="D4_C4N" from="D4" to="D4_N" numLanes="1" speed="13.89"/>
+    <edge id="D4_E2C" from="D4_E" to="D4" numLanes="3" speed="13.89"/>
+    <edge id="D4_C4E" from="D4" to="D4_E" numLanes="3" speed="13.89"/>
+    <edge id="D4_S2C" from="D4_S" to="D4" numLanes="2" speed="13.89"/>
+    <edge id="D4_C4S" from="D4" to="D4_S" numLanes="2" speed="13.89"/>
+    <edge id="D5_S2C" from="D5_S" to="D5" numLanes="2" speed="13.89"/>
+    <edge id="D5_C5S" from="D5" to="D5_S" numLanes="2" speed="13.89"/>
+    <edge id="D5_W2C" from="D5_W" to="D5" numLanes="1" speed="13.89"/>
+    <edge id="D5_C5W" from="D5" to="D5_W" numLanes="1" speed="13.89"/>
+    <edge id="D6_E2C" from="D6_E" to="D6" numLanes="2" speed="13.89"/>
+    <edge id="D6_C6E" from="D6" to="D6_E" numLanes="2" speed="13.89"/>
+    <edge id="D6_S2C" from="D6_S" to="D6" numLanes="1" speed="13.89"/>
+    <edge id="D6_C6S" from="D6" to="D6_S" numLanes="1" speed="13.89"/>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- ZONE 3: Industrial Outskirts links         -->
+    <!-- ══════════════════════════════════════════ -->
+    <edge id="I1_I2" from="I1" to="I2" numLanes="2" speed="13.89"/>
+    <edge id="I2_I1" from="I2" to="I1" numLanes="2" speed="13.89"/>
+    <edge id="I1_I3" from="I1" to="I3" numLanes="2" speed="13.89"/>
+    <edge id="I3_I1" from="I3" to="I1" numLanes="2" speed="13.89"/>
+    <edge id="I1_I4" from="I1" to="I4" numLanes="2" speed="13.89"/>
+    <edge id="I4_I1" from="I4" to="I1" numLanes="2" speed="13.89"/>
+    <edge id="I1_I5" from="I1" to="I5" numLanes="2" speed="13.89"/>
+    <edge id="I5_I1" from="I5" to="I1" numLanes="2" speed="13.89"/>
+    <edge id="I1_I6" from="I1" to="I6" numLanes="2" speed="13.89"/>
+    <edge id="I6_I1" from="I6" to="I1" numLanes="2" speed="13.89"/>
+    <edge id="I1_I7" from="I1" to="I7" numLanes="2" speed="13.89"/>
+    <edge id="I7_I1" from="I7" to="I1" numLanes="2" speed="13.89"/>
+
+    <!-- Zone 3 outer arms -->
+    <edge id="I3_W2C" from="I3_W" to="I3" numLanes="2" speed="13.89"/>
+    <edge id="I3_C3W" from="I3" to="I3_W" numLanes="2" speed="13.89"/>
+    <edge id="I3_S2C" from="I3_S" to="I3" numLanes="1" speed="13.89"/>
+    <edge id="I3_C3S" from="I3" to="I3_S" numLanes="1" speed="13.89"/>
+    <edge id="I4_N2C" from="I4_N" to="I4" numLanes="2" speed="13.89"/>
+    <edge id="I4_C4N" from="I4" to="I4_N" numLanes="2" speed="13.89"/>
+    <edge id="I4_E2C" from="I4_E" to="I4" numLanes="2" speed="13.89"/>
+    <edge id="I4_C4E" from="I4" to="I4_E" numLanes="2" speed="13.89"/>
+    <edge id="I5_S2C" from="I5_S" to="I5" numLanes="2" speed="13.89"/>
+    <edge id="I5_C5S" from="I5" to="I5_S" numLanes="2" speed="13.89"/>
+    <edge id="I5_W2C" from="I5_W" to="I5" numLanes="1" speed="13.89"/>
+    <edge id="I5_C5W" from="I5" to="I5_W" numLanes="1" speed="13.89"/>
+    <edge id="I6_E2C" from="I6_E" to="I6" numLanes="2" speed="13.89"/>
+    <edge id="I6_C6E" from="I6" to="I6_E" numLanes="2" speed="13.89"/>
+    <edge id="I6_S2C" from="I6_S" to="I6" numLanes="1" speed="13.89"/>
+    <edge id="I6_C6S" from="I6" to="I6_S" numLanes="1" speed="13.89"/>
+    <edge id="I7_N2C" from="I7_N" to="I7" numLanes="3" speed="13.89"/>
+    <edge id="I7_C7N" from="I7" to="I7_N" numLanes="1" speed="13.89"/>
+    <edge id="I7_E2C" from="I7_E" to="I7" numLanes="2" speed="13.89"/>
+    <edge id="I7_C7E" from="I7" to="I7_E" numLanes="1" speed="13.89"/>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- INTER-ZONE CONNECTORS                  -->
+    <!-- ══════════════════════════════════════ -->
+    <!-- Zone1 → Zone2 via CON_12 (main city arterial) -->
+    <edge id="C4_CON12"   from="C4"     to="CON_12" numLanes="3" speed="16.67"/>
+    <edge id="CON12_C4"   from="CON_12" to="C4"     numLanes="3" speed="16.67"/>
+    <edge id="CON12_D3"   from="CON_12" to="D3"     numLanes="3" speed="16.67"/>
+    <edge id="D3_CON12"   from="D3"     to="CON_12" numLanes="3" speed="16.67"/>
+
+    <!-- Zone1 → Zone3 via CON_13 (south arterial) -->
+    <edge id="C5_CON13"   from="C5"     to="CON_13" numLanes="2" speed="13.89"/>
+    <edge id="CON13_C5"   from="CON_13" to="C5"     numLanes="2" speed="13.89"/>
+    <edge id="CON13_I2"   from="CON_13" to="I2"     numLanes="2" speed="13.89"/>
+    <edge id="I2_CON13"   from="I2"     to="CON_13" numLanes="2" speed="13.89"/>
+
+    <!-- Zone2 → Zone3 via CON_23 (diagonal connector) -->
+    <edge id="D5_CON23"   from="D5"     to="CON_23" numLanes="2" speed="13.89"/>
+    <edge id="CON23_D5"   from="CON_23" to="D5"     numLanes="2" speed="13.89"/>
+    <edge id="CON23_I4"   from="CON_23" to="I4"     numLanes="2" speed="13.89"/>
+    <edge id="I4_CON23"   from="I4"     to="CON_23" numLanes="2" speed="13.89"/>
+</edges>

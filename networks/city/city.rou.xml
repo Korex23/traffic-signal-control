@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
+    <vType id="bus" accel="1.2" decel="3.0" sigma="0.2" length="12" maxSpeed="11.11" color="0,0,1"/>
+    <vType id="emergency" accel="3.0" decel="6.0" sigma="0.0" length="5" maxSpeed="16.67" color="1,0,0"/>
+
+    <!-- ═══════════════════════════ -->
+    <!-- Cross-city through routes   -->
+    <!-- ═══════════════════════════ -->        
+    <!-- West to East (Zone1 through to Zone2) -->
+    <route id="city_WE" edges="C3_W2C C3_C1 C1_C4 C4_CON12 CON12_D3 D3_D1 D1_D4 D4_C4E"/>
+    <route id="city_EW" edges="D4_E2C D4_D1 D1_D3 D3_CON12 CON12_C4 C4_C1 C1_C3 C3_C3W"/>
+
+    <!-- North to South (Zone2 through Zone1 to Zone3) -->
+    <route id="city_NS" edges="D2_N2C D2_D1 D1_D3 D3_CON12 CON12_C4 C4_C1 C1_C5 C5_CON13 CON13_I2 I2_I1 I1_I5 I5_C5S"/>
+    <route id="city_SN" edges="I5_S2C I5_I1 I1_I2 I2_CON13 CON13_C5 C5_C1 C1_C2 C2_C2N"/>
+
+    <!-- Diagonal cross-city -->
+    <route id="city_diag" edges="C3_W2C C3_C1 C1_C5 C5_CON13 CON13_I2 I2_I1 I1_I4 I4_C4E"/>
+
+    <!-- ════════════════════════════ -->
+    <!-- Zone 1 local routes          -->
+    <!-- ════════════════════════════ -->
+    <route id="Z1_NS" edges="C2_N2C C2_C1 C1_C5 C5_C5S"/>
+    <route id="Z1_WE" edges="C3_W2C C3_C1 C1_C4 C4_C4N"/>
+    <route id="Z1_circ" edges="C2_W2C C2_C1 C1_C3 C3_C3S"/>
+
+    <!-- ════════════════════════════ -->
+    <!-- Zone 2 local routes          -->
+    <!-- ════════════════════════════ -->
+    <route id="Z2_WE" edges="D3_NW2C D3_D1 D1_D4 D4_C4E"/>
+    <route id="Z2_NS" edges="D2_N2C D2_D1 D1_D5 D5_C5S"/>
+    <route id="Z2_diag" edges="D3_N2C D3_D1 D1_D6 D6_C6E"/>
+
+    <!-- ════════════════════════════ -->
+    <!-- Zone 3 local routes          -->
+    <!-- ════════════════════════════ -->
+    <route id="Z3_WE" edges="I3_W2C I3_I1 I1_I4 I4_C4E"/>
+    <route id="Z3_NS" edges="I7_N2C I7_I1 I1_I5 I5_C5S"/>
+    <route id="Z3_diag" edges="I4_N2C I4_I1 I1_I6 I6_C6S"/>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- EV corridors across zones                  -->
+    <!-- ══════════════════════════════════════════ -->
+    <!-- EV West to East full city -->
+    <route id="EV_city_WE" edges="C3_W2C C3_C1 C1_C4 C4_CON12 CON12_D3 D3_D1 D1_D4 D4_C4E"/>
+    <!-- EV North to South full city -->
+    <route id="EV_city_NS" edges="D2_N2C D2_D1 D1_D3 D3_CON12 CON12_C4 C4_C1 C1_C5 C5_CON13 CON13_I2 I2_I1 I1_I5 I5_C5S"/>
+    <!-- EV local Zone3 -->
+    <route id="EV_zone3" edges="I7_N2C I7_I1 I1_I4 I4_C4E"/>
+
+    <!-- ════════════════════════════ -->
+    <!-- Bus routes                   -->
+    <!-- ════════════════════════════ -->
+    <route id="bus_1" edges="C3_W2C C3_C1 C1_C4 C4_CON12 CON12_D3 D3_D1 D1_D2 D2_C2N"/>
+    <route id="bus_2" edges="C2_N2C C2_C1 C1_C5 C5_CON13 CON13_I2 I2_I1 I1_I3 I3_C3W"/>
+
+    <!-- ════════════════════ -->
+    <!-- TRAFFIC FLOWS        -->
+    <!-- ════════════════════ -->
+
+    <!-- Cross city arterial flows (high volume) -->
+    <flow id="flow_city_WE"   type="car" route="city_WE"   begin="0" end="999999" vehsPerHour="300"/>
+    <flow id="flow_city_EW"   type="car" route="city_EW"   begin="0" end="999999" vehsPerHour="300"/>
+    <flow id="flow_city_NS"   type="car" route="city_NS"   begin="0" end="999999" vehsPerHour="200"/>
+    <flow id="flow_city_SN"   type="car" route="city_SN"   begin="0" end="999999" vehsPerHour="200"/>
+    <flow id="flow_city_diag" type="car" route="city_diag" begin="0" end="999999" vehsPerHour="100"/>
+
+    <!-- Zone 1 local flows -->
+    <flow id="flow_Z1_NS"   type="car" route="Z1_NS"   begin="0" end="999999" vehsPerHour="100"/>
+    <flow id="flow_Z1_WE"   type="car" route="Z1_WE"   begin="0" end="999999" vehsPerHour="100"/>
+    <flow id="flow_Z1_circ" type="car" route="Z1_circ" begin="0" end="999999" vehsPerHour="80"/>
+
+    <!-- Zone 2 local flows -->
+    <flow id="flow_Z2_WE"   type="car" route="Z2_WE"   begin="0" end="999999" vehsPerHour="120"/>
+    <flow id="flow_Z2_NS"   type="car" route="Z2_NS"   begin="0" end="999999" vehsPerHour="100"/>
+    <flow id="flow_Z2_diag" type="car" route="Z2_diag" begin="0" end="999999" vehsPerHour="80"/>
+
+    <!-- Zone 3 local flows -->
+    <flow id="flow_Z3_WE"   type="car" route="Z3_WE"   begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_Z3_NS"   type="car" route="Z3_NS"   begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_Z3_diag" type="car" route="Z3_diag" begin="0" end="999999" vehsPerHour="60"/>
+
+    <!-- Bus flows -->
+    <flow id="flow_bus_1" type="bus" route="bus_1" begin="0" end="999999" vehsPerHour="10"/>
+    <flow id="flow_bus_2" type="bus" route="bus_2" begin="0" end="999999" vehsPerHour="10"/>
+
+    <!-- Emergency vehicles -->
+    <flow id="flow_EV_WE"   type="emergency" route="EV_city_WE" begin="300"  end="999999" vehsPerHour="2"/>
+    <flow id="flow_EV_NS"   type="emergency" route="EV_city_NS" begin="600"  end="999999" vehsPerHour="1"/>
+    <flow id="flow_EV_Z3"   type="emergency" route="EV_zone3"   begin="1000" end="999999" vehsPerHour="1"/>
+
+</routes>

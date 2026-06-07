@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- Int1 to Int2 link (North, 3 lanes — primary corridor) -->
+    <edge id="Int1_Int2" from="Int1" to="Int2" numLanes="3" speed="13.89"/>
+    <edge id="Int2_Int1" from="Int2" to="Int1" numLanes="3" speed="13.89"/>
+
+    <!-- Int1 to Int3 link (West, 2 lanes) -->
+    <edge id="Int1_Int3" from="Int1" to="Int3" numLanes="2" speed="13.89"/>
+    <edge id="Int3_Int1" from="Int3" to="Int1" numLanes="2" speed="13.89"/>
+
+    <!-- Int1 to Int4 link (East, 3 lanes — primary corridor) -->
+    <edge id="Int1_Int4" from="Int1" to="Int4" numLanes="3" speed="13.89"/>
+    <edge id="Int4_Int1" from="Int4" to="Int1" numLanes="3" speed="13.89"/>
+
+    <!-- Int1 to Int5 link (South-West diagonal, 2 lanes) -->
+    <edge id="Int1_Int5" from="Int1" to="Int5" numLanes="2" speed="13.89"/>
+    <edge id="Int5_Int1" from="Int5" to="Int1" numLanes="2" speed="13.89"/>
+
+    <!-- Int1 to Int6 link (South-East diagonal, 2 lanes) -->
+    <edge id="Int1_Int6" from="Int1" to="Int6" numLanes="2" speed="13.89"/>
+    <edge id="Int6_Int1" from="Int6" to="Int1" numLanes="2" speed="13.89"/>
+
+    <!-- Int2 external arms (T-junction) -->
+    <edge id="Int2_N2C" from="Int2_N" to="Int2" numLanes="2" speed="13.89"/>
+    <edge id="Int2_C2N" from="Int2" to="Int2_N" numLanes="2" speed="13.89"/>
+    <edge id="Int2_W2C" from="Int2_W" to="Int2" numLanes="1" speed="13.89"/>
+    <edge id="Int2_C2W" from="Int2" to="Int2_W" numLanes="1" speed="13.89"/>
+    <edge id="Int2_E2C" from="Int2_E" to="Int2" numLanes="2" speed="13.89"/>
+    <edge id="Int2_C2E" from="Int2" to="Int2_E" numLanes="2" speed="13.89"/>
+
+    <!-- Int3 external arms (5-arm asymmetric) -->
+    <edge id="Int3_N2C"  from="Int3_N"  to="Int3" numLanes="2" speed="13.89"/>
+    <edge id="Int3_C2N"  from="Int3"    to="Int3_N" numLanes="2" speed="13.89"/>
+    <edge id="Int3_W2C"  from="Int3_W"  to="Int3" numLanes="3" speed="13.89"/>
+    <edge id="Int3_C2W"  from="Int3"    to="Int3_W" numLanes="3" speed="13.89"/>
+    <edge id="Int3_S2C"  from="Int3_S"  to="Int3" numLanes="2" speed="13.89"/>
+    <edge id="Int3_C2S"  from="Int3"    to="Int3_S" numLanes="2" speed="13.89"/>
+    <edge id="Int3_NW2C" from="Int3_NW" to="Int3" numLanes="1" speed="13.89"/>
+    <edge id="Int3_C2NW" from="Int3"    to="Int3_NW" numLanes="1" speed="13.89"/>
+
+    <!-- Int4 external arms (asymmetric — no West, connects to Int1) -->
+    <edge id="Int4_N2C" from="Int4_N" to="Int4" numLanes="1" speed="13.89"/>
+    <edge id="Int4_C2N" from="Int4"   to="Int4_N" numLanes="1" speed="13.89"/>
+    <edge id="Int4_E2C" from="Int4_E" to="Int4" numLanes="3" speed="13.89"/>
+    <edge id="Int4_C2E" from="Int4"   to="Int4_E" numLanes="3" speed="13.89"/>
+    <edge id="Int4_S2C" from="Int4_S" to="Int4" numLanes="2" speed="13.89"/>
+    <edge id="Int4_C2S" from="Int4"   to="Int4_S" numLanes="2" speed="13.89"/>
+
+    <!-- Int5 external arms (T-junction offset) -->
+    <edge id="Int5_S2C" from="Int5_S" to="Int5" numLanes="2" speed="13.89"/>
+    <edge id="Int5_C2S" from="Int5"   to="Int5_S" numLanes="2" speed="13.89"/>
+    <edge id="Int5_W2C" from="Int5_W" to="Int5" numLanes="2" speed="13.89"/>
+    <edge id="Int5_C2W" from="Int5"   to="Int5_W" numLanes="2" speed="13.89"/>
+
+    <!-- Int6 external arms (diagonal offset 4-way) -->
+    <edge id="Int6_N2C" from="Int6_N" to="Int6" numLanes="2" speed="13.89"/>
+    <edge id="Int6_C2N" from="Int6"   to="Int6_N" numLanes="2" speed="13.89"/>
+    <edge id="Int6_E2C" from="Int6_E" to="Int6" numLanes="2" speed="13.89"/>
+    <edge id="Int6_C2E" from="Int6"   to="Int6_E" numLanes="2" speed="13.89"/>
+    <edge id="Int6_S2C" from="Int6_S" to="Int6" numLanes="1" speed="13.89"/>
+    <edge id="Int6_C2S" from="Int6"   to="Int6_S" numLanes="1" speed="13.89"/>
+</edges>

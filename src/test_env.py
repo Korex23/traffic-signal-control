@@ -1,9 +1,13 @@
 from src.traffic_env import TrafficEnv
 import numpy as np
 
-def test_env(episodes=5, use_gui=False):
-    env = TrafficEnv(use_gui=use_gui, episode_length=100)
-    
+def test_env(episodes=5, use_gui=True):
+    env = TrafficEnv(
+        use_gui=use_gui,
+        episode_length=3600,
+        training_mode=True,
+    )
+
     for ep in range(episodes):
         obs, info = env.reset()
         total_reward = 0

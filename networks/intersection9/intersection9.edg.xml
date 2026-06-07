@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- Roundabout ring (one-way circular) -->
+    <edge id="R1_R2" from="R1" to="R2" numLanes="1" speed="8.33" priority="1"/>
+    <edge id="R2_R3" from="R2" to="R3" numLanes="1" speed="8.33" priority="1"/>
+    <edge id="R3_R4" from="R3" to="R4" numLanes="1" speed="8.33" priority="1"/>
+    <edge id="R4_R1" from="R4" to="R1" numLanes="1" speed="8.33" priority="1"/>
+
+    <!-- Approach arms -->
+    <edge id="N2R1" from="N" to="R1" numLanes="2" speed="13.89"/>
+    <edge id="R1_N" from="R1" to="N" numLanes="2" speed="13.89"/>
+    <edge id="E2R2" from="E" to="R2" numLanes="2" speed="13.89"/>
+    <edge id="R2_E" from="R2" to="E" numLanes="2" speed="13.89"/>
+    <edge id="S2R3" from="S" to="R3" numLanes="2" speed="13.89"/>
+    <edge id="R3_S" from="R3" to="S" numLanes="2" speed="13.89"/>
+    <edge id="W2R4" from="W" to="R4" numLanes="2" speed="13.89"/>
+    <edge id="R4_W" from="R4" to="W" numLanes="2" speed="13.89"/>
+</edges>

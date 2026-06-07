@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- Main E-W through road -->
+    <edge id="W2PW"  from="W"   to="PW"  numLanes="3" speed="13.89"/>
+    <edge id="PW2C"  from="PW"  to="C"   numLanes="3" speed="13.89"/>
+    <edge id="C2PE"  from="C"   to="PE"  numLanes="3" speed="13.89"/>
+    <edge id="PE2E"  from="PE"  to="E"   numLanes="3" speed="13.89"/>
+    <edge id="E2PE"  from="E"   to="PE"  numLanes="3" speed="13.89"/>
+    <edge id="PE2C"  from="PE"  to="C"   numLanes="3" speed="13.89"/>
+    <edge id="C2PW"  from="C"   to="PW"  numLanes="3" speed="13.89"/>
+    <edge id="PW2W"  from="PW"  to="W"   numLanes="3" speed="13.89"/>
+    <!-- N-S road -->
+    <edge id="N2C"   from="N"   to="C"   numLanes="2" speed="13.89"/>
+    <edge id="C2N"   from="C"   to="N"   numLanes="2" speed="13.89"/>
+    <edge id="S2C"   from="S"   to="C"   numLanes="2" speed="13.89"/>
+    <edge id="C2S"   from="C"   to="S"   numLanes="2" speed="13.89"/>
+    <!-- Displaced left turn lanes -->
+    <edge id="PW2DLT" from="PW" to="DLT_W" numLanes="1" speed="8.33"/>
+    <edge id="DLT_W2C" from="DLT_W" to="C" numLanes="1" speed="8.33"/>
+    <edge id="PE2DLT" from="PE" to="DLT_E" numLanes="1" speed="8.33"/>
+    <edge id="DLT_E2C" from="DLT_E" to="C" numLanes="1" speed="8.33"/>
+</edges>

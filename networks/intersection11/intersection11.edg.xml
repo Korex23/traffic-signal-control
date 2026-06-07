@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <!-- Major E-W road: 4 lanes -->
+    <edge id="E2C" from="E" to="C" numLanes="4" speed="16.67"/>
+    <edge id="C2E" from="C" to="E" numLanes="4" speed="16.67"/>
+    <edge id="W2C" from="W" to="C" numLanes="4" speed="16.67"/>
+    <edge id="C2W" from="C" to="W" numLanes="4" speed="16.67"/>
+    <!-- Minor N-S road: 1 lane -->
+    <edge id="N2C" from="N" to="C" numLanes="1" speed="8.33"/>
+    <edge id="C2N" from="C" to="N" numLanes="1" speed="8.33"/>
+    <edge id="S2C" from="S" to="C" numLanes="1" speed="8.33"/>
+    <edge id="C2S" from="C" to="S" numLanes="1" speed="8.33"/>
+</edges>

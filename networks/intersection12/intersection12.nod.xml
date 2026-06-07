@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <!-- Main central junction -->
+    <node id="C"   x="0"    y="0"    type="traffic_light"/>
+    <!-- Pre-signal nodes on E-W road (displaced left turn crossovers) -->
+    <node id="PW"  x="-100" y="0"    type="traffic_light"/>
+    <node id="PE"  x="100"  y="0"    type="traffic_light"/>
+    <!-- Dead ends -->
+    <node id="N"   x="0"    y="200"  type="dead_end"/>
+    <node id="S"   x="0"    y="-200" type="dead_end"/>
+    <node id="E"   x="300"  y="0"    type="dead_end"/>
+    <node id="W"   x="-300" y="0"    type="dead_end"/>
+    <!-- Displaced left turn lanes -->
+    <node id="DLT_W" x="-100" y="30"  type="priority"/>
+    <node id="DLT_E" x="100"  y="-30" type="priority"/>
+</nodes>

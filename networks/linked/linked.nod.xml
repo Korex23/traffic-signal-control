@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <!-- Central intersection -->
+    <node id="Int1" x="0"    y="0"    type="traffic_light"/>
+    
+    <!-- Connected intersections -->
+    <node id="Int2" x="0"    y="300"  type="traffic_light"/>
+    <node id="Int3" x="-300" y="0"    type="traffic_light"/>
+    <node id="Int4" x="300"  y="0"    type="traffic_light"/>
+    <node id="Int5" x="0"    y="-300" type="traffic_light"/>
+    
+    <!-- Dead ends for Int2 -->
+    <node id="Int2_N"  x="0"    y="500"  type="dead_end"/>
+    <node id="Int2_W"  x="-200" y="300"  type="dead_end"/>
+    <node id="Int2_E"  x="200"  y="300"  type="dead_end"/>
+
+    <!-- Dead ends for Int3 -->
+    <node id="Int3_N"  x="-300" y="200"  type="dead_end"/>
+    <node id="Int3_S"  x="-300" y="-200" type="dead_end"/>
+    <node id="Int3_W"  x="-500" y="0"    type="dead_end"/>
+
+    <!-- Dead ends for Int4 -->
+    <node id="Int4_N"  x="300"  y="200"  type="dead_end"/>
+    <node id="Int4_S"  x="300"  y="-200" type="dead_end"/>
+    <node id="Int4_E"  x="500"  y="0"    type="dead_end"/>
+
+    <!-- Dead ends for Int5 -->
+    <node id="Int5_S"  x="0"    y="-500" type="dead_end"/>
+    <node id="Int5_W"  x="-200" y="-300" type="dead_end"/>
+    <node id="Int5_E"  x="200"  y="-300" type="dead_end"/>
+</nodes>

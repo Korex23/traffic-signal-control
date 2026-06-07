@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <input>
+        <net-file value="intersection6.net.xml"/>
+        <route-files value="intersection6.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="999999"/>
+    </time>
+</configuration>

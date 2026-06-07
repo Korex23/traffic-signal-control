@@ -1,130 +1,275 @@
 import os
 import sys
+import random
 import gymnasium as gym
 import numpy as np
 import traci
 
-# SUMO setup
 if "SUMO_HOME" in os.environ:
     tools = os.path.join(os.environ["SUMO_HOME"], "tools")
     sys.path.append(tools)
 else:
     sys.exit("Please set SUMO_HOME environment variable")
 
-# Paths to SUMO config files
-SUMO_CONFIGS = [
-    os.path.join("networks", "intersection1", "intersection1.sumocfg"),
-    os.path.join("networks", "intersection2", "intersection2.sumocfg"),
-    os.path.join("networks", "intersection3", "intersection3.sumocfg"),
-]
-
-# Intersection definitions
-INTERSECTIONS = [
+# ── Intersection pool ──────────────────────────────────────────────────────
+INTERSECTION_POOL = [
     {
         "id": "intersection1",
-        "tl_id": "C",
-        "lanes_in": ["N2C_0", "N2C_1", "S2C_0", "S2C_1",
-                     "E2C_0", "E2C_1", "W2C_0", "W2C_1"],
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "N2C_0", "N2C_1", "S2C_0", "S2C_1",
+            "E2C_0", "E2C_1", "W2C_0", "W2C_1",
+        ],
         "num_phases": 4,
+        "config": os.path.join("networks", "intersection1", "intersection1.sumocfg"),
     },
     {
         "id": "intersection2",
-        "tl_id": "C",
-        "lanes_in": ["N2C_0", "N2C_1", "N2C_2",
-                     "S2C_0", "S2C_1", "S2C_2",
-                     "E2C_0", "E2C_1",
-                     "W2C_0", "W2C_1",
-                     "NE2C_0", "NE2C_1",
-                     "SW2C_0", "SW2C_1"],
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "N2C_0", "N2C_1", "N2C_2",
+            "S2C_0", "S2C_1", "S2C_2",
+            "E2C_0", "E2C_1",
+            "W2C_0", "W2C_1",
+            "NE2C_0", "NE2C_1",
+            "SW2C_0", "SW2C_1",
+        ],
         "num_phases": 6,
+        "config": os.path.join("networks", "intersection2", "intersection2.sumocfg"),
     },
     {
         "id": "intersection3",
-        "tl_id": "C",
-        "lanes_in": ["N2C_0", "N2C_1", "S2C_0", "S2C_1",
-                     "E2C_0", "E2C_1", "W2C_0", "W2C_1"],
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "N2C_0", "N2C_1", "S2C_0", "S2C_1",
+            "E2C_0", "E2C_1", "W2C_0", "W2C_1",
+        ],
         "num_phases": 4,
+        "config": os.path.join("networks", "intersection3", "intersection3.sumocfg"),
+    },
+    {
+        "id": "intersection5",
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "N2C_0", "N2C_1",
+            "E2C_0", "E2C_1", "E2C_2",
+            "W2C_0", "W2C_1", "W2C_2",
+        ],
+        "num_phases": 3,
+        "config": os.path.join("networks", "intersection5", "intersection5.sumocfg"),
+    },
+    {
+        "id": "intersection6",
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "S2C_0", "S2C_1",
+            "NW2C_0", "NW2C_1",
+            "NE2C_0", "NE2C_1",
+        ],
+        "num_phases": 3,
+        "config": os.path.join("networks", "intersection6", "intersection6.sumocfg"),
+    },
+    {
+        "id": "intersection7",
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "NE2C_0", "NE2C_1",
+            "SW2C_0", "SW2C_1",
+            "NW2C_0", "NW2C_1",
+            "SE2C_0", "SE2C_1",
+        ],
+        "num_phases": 4,
+        "config": os.path.join("networks", "intersection7", "intersection7.sumocfg"),
+    },
+    {
+        "id": "intersection8",
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "N2C_0", "N2C_1",
+            "S2C_0", "S2C_1",
+            "E2C_0", "E2C_1", "E2C_2", "E2C_3",
+            "W2C_0", "W2C_1", "W2C_2", "W2C_3",
+        ],
+        "num_phases": 4,
+        "config": os.path.join("networks", "intersection8", "intersection8.sumocfg"),
+    },
+    {
+        "id": "intersection9",
+        "tl_ids": ["R1", "R2", "R3", "R4"],
+        "lanes_in": [
+            "N2R1_0", "N2R1_1",
+            "E2R2_0", "E2R2_1",
+            "S2R3_0", "S2R3_1",
+            "W2R4_0", "W2R4_1",
+        ],
+        "num_phases": 2,
+        "config": os.path.join("networks", "intersection9", "intersection9.sumocfg"),
+    },
+    {
+        "id": "intersection10",
+        "tl_ids": ["C1", "C2"],
+        "lanes_in": [
+            "W2C1_0", "W2C1_1",
+            "N1_C1_0", "N1_C1_1",
+            "E2C2_0", "E2C2_1",
+            "S2_C2_0", "S2_C2_1",
+        ],
+        "num_phases": 4,
+        "config": os.path.join("networks", "intersection10", "intersection10.sumocfg"),
+    },
+    {
+        "id": "intersection11",
+        "tl_ids": ["C"],
+        "lanes_in": [
+            "E2C_0", "E2C_1", "E2C_2", "E2C_3",
+            "W2C_0", "W2C_1", "W2C_2", "W2C_3",
+            "N2C_0", "S2C_0",
+        ],
+        "num_phases": 4,
+        "config": os.path.join("networks", "intersection11", "intersection11.sumocfg"),
+    },
+    {
+        "id": "intersection12",
+        "tl_ids": ["C", "PW", "PE"],
+        "lanes_in": [
+            "W2PW_0", "W2PW_1", "W2PW_2",
+            "E2PE_0", "E2PE_1", "E2PE_2",
+            "N2C_0", "N2C_1",
+            "S2C_0", "S2C_1",
+        ],
+        "num_phases": 4,
+        "config": os.path.join("networks", "intersection12", "intersection12.sumocfg"),
     },
 ]
 
-# State vector size
-# Int 1 & 3: 8 queue + 8 wait + 4 phase + 1 EV = 21
-# Int 2:    12 queue + 12 wait + 6 phase + 1 EV = 31
-# Total: 21 + 31 + 21 = 73
-STATE_SIZE = 73
+# ── Evaluation configs (demand scenarios) ──────────────────────────────────
+SUMO_CONFIGS = {
+    "low": [
+        os.path.join("networks", "intersection1", "intersection1_low.sumocfg"),
+        os.path.join("networks", "intersection2", "intersection2_low.sumocfg"),
+        os.path.join("networks", "intersection3", "intersection3_low.sumocfg"),
+    ],
+    "medium": [
+        os.path.join("networks", "intersection1", "intersection1_medium.sumocfg"),
+        os.path.join("networks", "intersection2", "intersection2_medium.sumocfg"),
+        os.path.join("networks", "intersection3", "intersection3_medium.sumocfg"),
+    ],
+    "peak": [
+        os.path.join("networks", "intersection1", "intersection1_peak.sumocfg"),
+        os.path.join("networks", "intersection2", "intersection2_peak.sumocfg"),
+        os.path.join("networks", "intersection3", "intersection3_peak.sumocfg"),
+    ],
+    "default": [
+        os.path.join("networks", "intersection1", "intersection1.sumocfg"),
+        os.path.join("networks", "intersection2", "intersection2.sumocfg"),
+        os.path.join("networks", "intersection3", "intersection3.sumocfg"),
+    ],
+}
 
-# Reward weights from thesis
-ALPHA = 5.0  # EV bonus weight
-BETA  = 0.5  # Queue growth penalty weight
+# ── Eval intersection definitions ──────────────────────────────────────────
+EVAL_INTERSECTIONS = [
+    {
+        "lanes_in": [
+            "N2C_0", "N2C_1", "S2C_0", "S2C_1",
+            "E2C_0", "E2C_1", "W2C_0", "W2C_1",
+        ]
+    },
+    {
+        "lanes_in": [
+            "N2C_0", "N2C_1", "N2C_2",
+            "S2C_0", "S2C_1", "S2C_2",
+            "E2C_0", "E2C_1", "W2C_0", "W2C_1",
+            "NE2C_0", "NE2C_1", "SW2C_0", "SW2C_1",
+        ]
+    },
+    {
+        "lanes_in": [
+            "N2C_0", "N2C_1", "S2C_0", "S2C_1",
+            "E2C_0", "E2C_1", "W2C_0", "W2C_1",
+        ]
+    },
+]
 
-# Reward normalization factor
+# ── Constants ──────────────────────────────────────────────────────────────
+STATE_SIZE   = 93
+ALPHA        = 5.0
+BETA         = 0.5
 REWARD_SCALE = 1000.0
 
 
 class TrafficEnv(gym.Env):
     """
-    Custom Gymnasium environment for adaptive traffic signal control.
-    Controls 3 intersections simultaneously via TraCI.
-    State:  73-dimensional vector (queue lengths, waiting times, phases, EV flags)
-    Action: discrete phase selection per intersection
-    Reward: R = (-ΣW + α·EV - β·ΔQ) / REWARD_SCALE
+    Adaptive traffic signal control environment.
+    Training mode : randomly samples 3 intersections from pool each episode.
+    Evaluation mode: uses fixed demand-specific sumocfg files.
+    State  : 93-dimensional vector (queue, wait, phase, EV flag)
+    Action : MultiDiscrete([6, 6, 6]) — one phase per intersection slot
+    Reward : R = (−avg_wait + α·EV − β·Δavg_queue) / REWARD_SCALE
     """
 
-    def __init__(self, use_gui=False, episode_length=3600):
+    def __init__(
+        self,
+        use_gui        = False,
+        episode_length = 3600,
+        scenario       = "default",
+        training_mode  = True,
+    ):
         super().__init__()
 
         self.use_gui        = use_gui
         self.episode_length = episode_length
+        self.scenario       = scenario
+        self.training_mode  = training_mode
         self.step_count     = 0
-        self.prev_queue_length = 0.0
+        self.prev_avg_queue = 0.0
 
-        # Action space: [4, 6, 4] — one phase choice per intersection
-        self.action_space = gym.spaces.MultiDiscrete([4, 6, 4])
+        # Action space: 6 phases max across all intersections in pool
+        self.action_space = gym.spaces.MultiDiscrete([6, 6, 6])
 
-        # Observation space: 73-dimensional normalized vector
+        # Observation space: 93-dimensional normalised vector
         self.observation_space = gym.spaces.Box(
-            low=0.0,
-            high=1.0,
-            shape=(STATE_SIZE,),
-            dtype=np.float32
+            low=0.0, high=1.0, shape=(93,), dtype=np.float32
         )
 
-        # TraCI ports — one per SUMO instance
-        self.ports = [8813, 8814, 8815]
+        self.ports          = [8813, 8814, 8815]
+        self.min_green      = 10
+        self.green_timer    = [0, 0, 0]
+        self.current_phase  = [0, 0, 0]
 
-        # Minimum green time enforcement (10 seconds from thesis)
-        self.min_green    = 10
-        self.green_timer  = [0, 0, 0]
-        self.current_phase = [0, 0, 0]
+        self.selected_intersections = None
 
-        print("TrafficEnv initialized")
-        print(f"Action space: {self.action_space}")
+        print(f"TrafficEnv initialized | mode={'TRAINING' if training_mode else 'EVAL'}")
+        print(f"Action space:      {self.action_space}")
         print(f"Observation space: {self.observation_space}")
 
-    # ──────────────────────────────────────────────────────────────────────
-    # SUMO lifecycle
-    # ──────────────────────────────────────────────────────────────────────
+    # ── SUMO lifecycle ─────────────────────────────────────────────────────
 
     def _start_sumo(self):
-        """Start 3 SUMO instances on separate ports"""
         sumo_binary = "sumo-gui" if self.use_gui else "sumo"
 
-        for i, (config, port) in enumerate(zip(SUMO_CONFIGS, self.ports)):
+        if self.training_mode:
+            self.selected_intersections = random.sample(INTERSECTION_POOL, 3)
+            configs = [i["config"] for i in self.selected_intersections]
+            ids     = [i["id"]     for i in self.selected_intersections]
+            print(f"  Sampled: {ids}")
+        else:
+            configs = SUMO_CONFIGS[self.scenario]
+            self.selected_intersections = None
+
+        for i, (config, port) in enumerate(zip(configs, self.ports)):
             sumo_cmd = [
                 sumo_binary,
                 "-c", config,
                 "--no-warnings",
                 "--no-step-log",
                 "--random",
-	        "--time-to-teleport", "-1",
-    		"--end", "999999",
-    		"--quit-on-end", "false",
+                "--time-to-teleport", "-1",
+                "--end", "999999",
+                "--quit-on-end", "false",
             ]
             traci.start(sumo_cmd, port=port, label=f"int{i+1}")
-            print(f"Started SUMO instance {i+1} on port {port}")
 
     def _close_sumo(self):
-        """Close all SUMO instances"""
         for i in range(3):
             try:
                 traci.switch(f"int{i+1}")
@@ -132,19 +277,33 @@ class TrafficEnv(gym.Env):
             except Exception:
                 pass
 
-    # ──────────────────────────────────────────────────────────────────────
-    # State
-    # ──────────────────────────────────────────────────────────────────────
+    # ── Helpers ────────────────────────────────────────────────────────────
+
+    def _get_lanes(self, slot):
+        if self.training_mode and self.selected_intersections:
+            return self.selected_intersections[slot]["lanes_in"]
+        return EVAL_INTERSECTIONS[slot]["lanes_in"]
+
+    def _get_tl_ids(self, slot):
+        if self.training_mode and self.selected_intersections:
+            return self.selected_intersections[slot]["tl_ids"]
+        return ["C"]
+
+    def _get_max_phases(self, slot):
+        if self.training_mode and self.selected_intersections:
+            return self.selected_intersections[slot]["num_phases"]
+        return [4, 6, 4][slot]
+
+    # ── State ──────────────────────────────────────────────────────────────
 
     def _get_state(self):
-        """Build 73-dimensional state vector from all 3 intersections"""
         state = []
 
-        for i, intersection in enumerate(INTERSECTIONS):
+        for i in range(3):
             traci.switch(f"int{i+1}")
-            lanes = intersection["lanes_in"]
+            lanes = self._get_lanes(i)
 
-            # Queue lengths per lane (normalized by max 50 vehicles)
+            # Queue lengths — normalised by max 50 vehicles
             queue_lengths = []
             for lane in lanes:
                 try:
@@ -153,7 +312,7 @@ class TrafficEnv(gym.Env):
                     q = 0
                 queue_lengths.append(q / 50.0)
 
-            # Waiting times per lane (normalized by max 300 seconds)
+            # Waiting times — normalised by max 300 seconds
             waiting_times = []
             for lane in lanes:
                 try:
@@ -164,166 +323,126 @@ class TrafficEnv(gym.Env):
 
             # Pad / truncate to fixed size
             max_lanes = 12
-            queue_lengths = queue_lengths[:max_lanes]
-            waiting_times = waiting_times[:max_lanes]
-            while len(queue_lengths) < max_lanes:
-                queue_lengths.append(0.0)
-            while len(waiting_times) < max_lanes:
-                waiting_times.append(0.0)
+            queue_lengths = (queue_lengths + [0.0] * max_lanes)[:max_lanes]
+            waiting_times = (waiting_times + [0.0] * max_lanes)[:max_lanes]
 
-            # Active phase one-hot encoded
-            max_phases  = 6
+            # Active phase one-hot
+            max_phases    = 6
             phase_one_hot = [0.0] * max_phases
             try:
-                cp = traci.trafficlight.getPhase(intersection["tl_id"])
+                cp = traci.trafficlight.getPhase(self._get_tl_ids(i)[0])
                 if cp < max_phases:
                     phase_one_hot[cp] = 1.0
             except Exception:
                 pass
 
-            # Emergency vehicle flag
-            ev_flag = self._detect_emergency_vehicle(i, lanes)
+            # EV flag
+            ev_flag = self._detect_ev(i, lanes)
 
-            # Build per-intersection state with thesis dimensions
-            if i == 1:  # Intersection 2: 12+12+6+1 = 31
-                state.extend(queue_lengths)     # 12
-                state.extend(waiting_times)     # 12
-                state.extend(phase_one_hot)     # 6
-                state.append(float(ev_flag))    # 1
-            else:       # Intersections 1 & 3: 8+8+4+1 = 21
-                state.extend(queue_lengths[:8]) # 8
-                state.extend(waiting_times[:8]) # 8
-                state.extend(phase_one_hot[:4]) # 4
-                state.append(float(ev_flag))    # 1
+            state.extend(queue_lengths)
+            state.extend(waiting_times)
+            state.extend(phase_one_hot)
+            state.append(float(ev_flag))
 
         return np.array(state, dtype=np.float32)
 
-    # ──────────────────────────────────────────────────────────────────────
-    # Emergency vehicle detection
-    # ──────────────────────────────────────────────────────────────────────
+    # ── EV detection ───────────────────────────────────────────────────────
 
-    def _detect_emergency_vehicle(self, intersection_idx, lanes):
-        """Detect if emergency vehicle is present on any approach lane"""
+    def _detect_ev(self, slot, lanes):
         try:
             for lane in lanes:
-                vehicles = traci.lane.getLastStepVehicleIDs(lane)
-                for v in vehicles:
+                for v in traci.lane.getLastStepVehicleIDs(lane):
                     if traci.vehicle.getTypeID(v) == "emergency":
                         return 1
         except Exception:
             pass
         return 0
 
-    # ──────────────────────────────────────────────────────────────────────
-    # Reward
-    # ──────────────────────────────────────────────────────────────────────
+    # ── Reward ─────────────────────────────────────────────────────────────
 
     def _compute_reward(self, actions, ev_flags):
-        """
-        R = (-ΣW + α·EV - β·ΔQ) / REWARD_SCALE
-        Normalized to keep values in range PPO can learn from.
-        """
         total_waiting = 0.0
         total_queue   = 0.0
+        total_lanes   = 0
         ev_bonus      = 0.0
 
-        for i, intersection in enumerate(INTERSECTIONS):
+        for i in range(3):
             traci.switch(f"int{i+1}")
-            lanes = intersection["lanes_in"]
+            lanes = self._get_lanes(i)
 
             for lane in lanes:
                 try:
                     total_waiting += traci.lane.getWaitingTime(lane)
                     total_queue   += traci.lane.getLastStepHaltingNumber(lane)
+                    total_lanes   += 1
                 except Exception:
                     pass
 
-            # EV bonus if chosen phase serves an EV approach
             if ev_flags[i]:
                 ev_bonus += ALPHA
 
-        # Queue growth penalty
-        delta_queue            = total_queue - self.prev_queue_length
-        self.prev_queue_length = total_queue
+        # Per-lane averages — makes reward comparable across intersection sizes
+        avg_waiting = total_waiting / max(total_lanes, 1)
+        avg_queue   = total_queue   / max(total_lanes, 1)
 
-        # Raw reward
-        reward = -total_waiting + ev_bonus - BETA * delta_queue
+        delta_avg           = avg_queue - self.prev_avg_queue
+        self.prev_avg_queue = avg_queue
 
-        # ── Normalize ─────────────────────────────────────────────────────
-        reward = reward / REWARD_SCALE
+        reward = (-avg_waiting + ev_bonus - BETA * delta_avg) / REWARD_SCALE
 
         return reward, ev_flags
 
-    # ──────────────────────────────────────────────────────────────────────
-    # Gymnasium interface
-    # ──────────────────────────────────────────────────────────────────────
+    # ── Gymnasium interface ────────────────────────────────────────────────
 
     def reset(self, seed=None, options=None):
-        """Reset environment for new episode"""
         super().reset(seed=seed)
 
         self._close_sumo()
 
-        self.step_count        = 0
-        self.prev_queue_length = 0.0
-        self.green_timer       = [0, 0, 0]
-        self.current_phase     = [0, 0, 0]
+        self.step_count     = 0
+        self.prev_avg_queue = 0.0
+        self.green_timer    = [0, 0, 0]
+        self.current_phase  = [0, 0, 0]
 
         self._start_sumo()
 
-        state = self._get_state()
-        info  = {}
-
-        return state, info
+        return self._get_state(), {}
 
     def step(self, actions):
-        """
-        Execute one step in the environment.
-        actions: array of [phase_int1, phase_int2, phase_int3]
-        """
         ev_flags = [0, 0, 0]
 
-        for i, intersection in enumerate(INTERSECTIONS):
+        for i in range(3):
             traci.switch(f"int{i+1}")
-            tl_id  = intersection["tl_id"]
-            action = actions[i]
+            action     = int(actions[i])
+            max_phases = self._get_max_phases(i)
+            tl_ids     = self._get_tl_ids(i)
 
             # Enforce minimum green time
             if self.green_timer[i] >= self.min_green:
-                if action != self.current_phase[i]:
-                    traci.trafficlight.setPhase(tl_id, action)
-                    self.current_phase[i] = action
+                safe_action = action % max_phases
+                if safe_action != self.current_phase[i]:
+                    try:
+                        traci.trafficlight.setPhase(tl_ids[0], safe_action)
+                    except Exception:
+                        pass
+                    self.current_phase[i] = safe_action
                     self.green_timer[i]   = 0
             else:
                 self.green_timer[i] += 1
 
-            # Detect emergency vehicles
-            ev_flags[i] = self._detect_emergency_vehicle(
-                i, intersection["lanes_in"]
-            )
-
-            # Advance simulation by 1 step
+            ev_flags[i] = self._detect_ev(i, self._get_lanes(i))
             traci.simulationStep()
 
-        # New state
-        state = self._get_state()
+        state             = self._get_state()
+        reward, ev_flags  = self._compute_reward(actions, ev_flags)
+        self.step_count  += 1
+        done              = self.step_count >= self.episode_length
 
-        # Reward
-        reward, ev_flags = self._compute_reward(actions, ev_flags)
-
-        # Episode termination
-        self.step_count += 1
-        done     = self.step_count >= self.episode_length
-        truncated = False
-
-        info = {
+        return state, reward, done, False, {
             "step":     self.step_count,
             "ev_flags": ev_flags,
             "reward":   reward,
         }
 
-        return state, reward, done, truncated, info
-
     def close(self):
-        """Clean up SUMO instances"""
         self._close_sumo()

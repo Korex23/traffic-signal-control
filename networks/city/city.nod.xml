@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <!-- ═══════════════════════════════════ -->
+    <!-- ZONE 1: City Centre (symmetric grid) -->
+    <!-- ═══════════════════════════════════ -->
+    <node id="C1" x="0"    y="0"    type="traffic_light"/>
+    <node id="C2" x="0"    y="300"  type="traffic_light"/>
+    <node id="C3" x="-300" y="0"    type="traffic_light"/>
+    <node id="C4" x="300"  y="0"    type="traffic_light"/>
+    <node id="C5" x="0"    y="-300" type="traffic_light"/>
+
+    <!-- ════════════════════════════════════════ -->
+    <!-- ZONE 2: Commercial District (asymmetric) -->
+    <!-- ════════════════════════════════════════ -->
+    <node id="D1" x="900"  y="100"  type="traffic_light"/>
+    <node id="D2" x="900"  y="400"  type="traffic_light"/>
+    <node id="D3" x="580"  y="100"  type="traffic_light"/>
+    <node id="D4" x="1220" y="160"  type="traffic_light"/>
+    <node id="D5" x="820"  y="-220" type="traffic_light"/>
+    <node id="D6" x="1100" y="-160" type="traffic_light"/>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- ZONE 3: Industrial Outskirts (7-arm irregular) -->
+    <!-- ══════════════════════════════════════════ -->
+    <node id="I1" x="300"  y="-800" type="traffic_light"/>
+    <node id="I2" x="120"  y="-520" type="traffic_light"/>
+    <node id="I3" x="-80"  y="-800" type="traffic_light"/>
+    <node id="I4" x="620"  y="-720" type="traffic_light"/>
+    <node id="I5" x="380"  y="-1100" type="traffic_light"/>
+    <node id="I6" x="560"  y="-980" type="traffic_light"/>
+    <node id="I7" x="560"  y="-620" type="traffic_light"/>
+
+    <!-- ══════════════════════════ -->
+    <!-- CONNECTOR nodes between zones -->
+    <!-- ══════════════════════════ -->
+    <!-- Zone 1 to Zone 2 connector -->
+    <node id="CON_12" x="600" y="0" type="traffic_light"/>
+    <!-- Zone 1 to Zone 3 connector -->
+    <node id="CON_13" x="0"   y="-600" type="traffic_light"/>
+    <!-- Zone 2 to Zone 3 connector -->
+    <node id="CON_23" x="700" y="-500" type="traffic_light"/>
+
+    <!-- ═══════════════ -->
+    <!-- City dead ends  -->
+    <!-- ═══════════════ -->
+    <!-- Zone 1 outer arms -->
+    <node id="C2_N" x="0"    y="500"   type="dead_end"/>
+    <node id="C2_W" x="-200" y="300"   type="dead_end"/>
+    <node id="C2_E" x="200"  y="300"   type="dead_end"/>
+    <node id="C3_N" x="-300" y="200"   type="dead_end"/>
+    <node id="C3_S" x="-300" y="-200"  type="dead_end"/>
+    <node id="C3_W" x="-500" y="0"     type="dead_end"/>
+    <node id="C4_N" x="300"  y="200"   type="dead_end"/>
+    <node id="C4_S" x="300"  y="-200"  type="dead_end"/>
+    <node id="C5_S" x="0"    y="-500"  type="dead_end"/>
+    <node id="C5_W" x="-200" y="-300"  type="dead_end"/>
+
+    <!-- Zone 2 outer arms -->
+    <node id="D2_N" x="900"  y="600"   type="dead_end"/>
+    <node id="D2_W" x="700"  y="400"   type="dead_end"/>
+    <node id="D2_E" x="1100" y="400"   type="dead_end"/>
+    <node id="D3_N" x="580"  y="300"   type="dead_end"/>
+    <node id="D3_NW" x="420" y="240"   type="dead_end"/>
+    <node id="D4_N" x="1220" y="360"   type="dead_end"/>
+    <node id="D4_E" x="1420" y="160"   type="dead_end"/>
+    <node id="D4_S" x="1220" y="-40"   type="dead_end"/>
+    <node id="D5_S" x="820"  y="-420"  type="dead_end"/>
+    <node id="D5_W" x="620"  y="-220"  type="dead_end"/>
+    <node id="D6_E" x="1300" y="-160"  type="dead_end"/>
+    <node id="D6_S" x="1100" y="-360"  type="dead_end"/>
+
+    <!-- Zone 3 outer arms -->
+    <node id="I3_W" x="-280" y="-800"  type="dead_end"/>
+    <node id="I3_S" x="-80"  y="-1000" type="dead_end"/>
+    <node id="I4_N" x="620"  y="-520"  type="dead_end"/>
+    <node id="I4_E" x="820"  y="-720"  type="dead_end"/>
+    <node id="I5_S" x="380"  y="-1300" type="dead_end"/>
+    <node id="I5_W" x="180"  y="-1100" type="dead_end"/>
+    <node id="I6_E" x="760"  y="-980"  type="dead_end"/>
+    <node id="I6_S" x="560"  y="-1180" type="dead_end"/>
+    <node id="I7_N" x="560"  y="-420"  type="dead_end"/>
+    <node id="I7_E" x="760"  y="-620"  type="dead_end"/>
+</nodes>

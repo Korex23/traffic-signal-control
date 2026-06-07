@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <edge id="W2C1"  from="W"  to="C1" numLanes="2" speed="13.89"/>
+    <edge id="C1_C2" from="C1" to="C2" numLanes="2" speed="13.89"/>
+    <edge id="C2_C1" from="C2" to="C1" numLanes="2" speed="13.89"/>
+    <edge id="C2_E"  from="C2" to="E"  numLanes="2" speed="13.89"/>
+    <edge id="E2C2"  from="E"  to="C2" numLanes="2" speed="13.89"/>
+    <edge id="C1_W"  from="C1" to="W"  numLanes="2" speed="13.89"/>
+    <edge id="N1_C1" from="N1" to="C1" numLanes="2" speed="13.89"/>
+    <edge id="C1_N1" from="C1" to="N1" numLanes="2" speed="13.89"/>
+    <edge id="C2_S2" from="C2" to="S2" numLanes="2" speed="13.89"/>
+    <edge id="S2_C2" from="S2" to="C2" numLanes="2" speed="13.89"/>
+</edges>

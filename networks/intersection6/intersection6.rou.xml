@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
+    <vType id="emergency" accel="3.0" decel="6.0" sigma="0.0" length="5" maxSpeed="16.67" color="1,0,0"/>
+    <route id="S2NW"  edges="S2C C2NW"/>
+    <route id="S2NE"  edges="S2C C2NE"/>
+    <route id="NW2NE" edges="NW2C C2NE"/>
+    <route id="NE2NW" edges="NE2C C2NW"/>
+    <route id="NW2S"  edges="NW2C C2S"/>
+    <route id="NE2S"  edges="NE2C C2S"/>
+    <flow id="flow_S2NW"  type="car" route="S2NW"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_S2NE"  type="car" route="S2NE"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_NW2NE" type="car" route="NW2NE" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_NE2NW" type="car" route="NE2NW" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_NW2S"  type="car" route="NW2S"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_NE2S"  type="car" route="NE2S"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_EV_S2NW" type="emergency" route="S2NW" begin="200" end="999999" vehsPerHour="1"/>
+    <flow id="flow_EV_NW2S" type="emergency" route="NW2S" begin="400" end="999999" vehsPerHour="1"/>
+</routes>

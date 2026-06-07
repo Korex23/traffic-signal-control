@@ -2,7 +2,7 @@
 <routes>
     <!-- Vehicle type -->
     <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
-
+     <vType id="emergency" accel="3.0" decel="6.0" sigma="0.0" length="5" maxSpeed="16.67" color="1,0,0"/>
     <!-- Routes -->
     <route id="NS" edges="N2C C2S"/>
     <route id="SN" edges="S2C C2N"/>
@@ -14,4 +14,10 @@
     <flow id="flow_SN" type="car" route="SN" begin="0" end="999999" vehsPerHour="50"/>
     <flow id="flow_EW" type="car" route="EW" begin="0" end="999999" vehsPerHour="50"/>
     <flow id="flow_WE" type="car" route="WE" begin="0" end="999999" vehsPerHour="50"/>
+
+    <!-- Emergency vehicles - ~2/hr from all directions -->
+<flow id="flow_EV_NS" type="emergency" route="NS" begin="100" end="999999" vehsPerHour="1"/>
+<flow id="flow_EV_SN" type="emergency" route="SN" begin="200" end="999999" vehsPerHour="1"/>
+<flow id="flow_EV_EW" type="emergency" route="EW" begin="300" end="999999" vehsPerHour="1"/>
+<flow id="flow_EV_WE" type="emergency" route="WE" begin="400" end="999999" vehsPerHour="1"/>
 </routes>

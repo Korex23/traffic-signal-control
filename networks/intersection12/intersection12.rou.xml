@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
+    <vType id="emergency" accel="3.0" decel="6.0" sigma="0.0" length="5" maxSpeed="16.67" color="1,0,0"/>
+    <!-- Through E-W -->
+    <route id="WE"    edges="W2PW PW2C C2PE PE2E"/>
+    <route id="EW"    edges="E2PE PE2C C2PW PW2W"/>
+    <!-- N-S through -->
+    <route id="NS"    edges="N2C C2S"/>
+    <route id="SN"    edges="S2C C2N"/>
+    <!-- Displaced left turns from W -->
+    <route id="W_LT_N" edges="W2PW PW2DLT DLT_W2C C2N"/>
+    <route id="W_LT_S" edges="W2PW PW2DLT DLT_W2C C2S"/>
+    <!-- Displaced left turns from E -->
+    <route id="E_LT_N" edges="E2PE PE2DLT DLT_E2C C2N"/>
+    <route id="E_LT_S" edges="E2PE PE2DLT DLT_E2C C2S"/>
+    <!-- Regular right turns -->
+    <route id="W_RT_S" edges="W2PW PW2C C2S"/>
+    <route id="E_RT_N" edges="E2PE PE2C C2N"/>
+    <!-- Flows -->
+    <flow id="flow_WE"     type="car" route="WE"     begin="0" end="999999" vehsPerHour="250"/>
+    <flow id="flow_EW"     type="car" route="EW"     begin="0" end="999999" vehsPerHour="250"/>
+    <flow id="flow_NS"     type="car" route="NS"     begin="0" end="999999" vehsPerHour="100"/>
+    <flow id="flow_SN"     type="car" route="SN"     begin="0" end="999999" vehsPerHour="100"/>
+    <flow id="flow_W_LT_N" type="car" route="W_LT_N" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_W_LT_S" type="car" route="W_LT_S" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_E_LT_N" type="car" route="E_LT_N" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_E_LT_S" type="car" route="E_LT_S" begin="0" end="999999" vehsPerHour="60"/>
+    <flow id="flow_W_RT_S" type="car" route="W_RT_S" begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_E_RT_N" type="car" route="E_RT_N" begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_EV_WE"  type="emergency" route="WE" begin="300" end="999999" vehsPerHour="2"/>
+    <flow id="flow_EV_NS"  type="emergency" route="NS" begin="600" end="999999" vehsPerHour="1"/>
+</routes>

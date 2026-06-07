@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="car" accel="2.0" decel="4.0" sigma="0.5" length="5" maxSpeed="13.89"/>
+    <vType id="emergency" accel="2.5" decel="5.0" sigma="0.0" length="5" maxSpeed="13.89" color="1,0,0"/>
+
+    <!-- All routes go clockwise around the ring -->
+    <route id="NS"  edges="N2R1 R1_R2 R2_R3 R3_S"/>
+    <route id="SN"  edges="S2R3 R3_R4 R4_R1 R1_N"/>
+    <route id="EW"  edges="E2R2 R2_R3 R3_R4 R4_W"/>
+    <route id="WE"  edges="W2R4 R4_R1 R1_R2 R2_E"/>
+    <route id="NE"  edges="N2R1 R1_R2 R2_E"/>
+    <route id="NW"  edges="N2R1 R1_R2 R2_R3 R3_R4 R4_W"/>
+    <route id="SE"  edges="S2R3 R3_R4 R4_R1 R1_R2 R2_E"/>
+    <route id="SW"  edges="S2R3 R3_R4 R4_W"/>
+
+    <flow id="flow_NS"  type="car" route="NS"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_SN"  type="car" route="SN"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_EW"  type="car" route="EW"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_WE"  type="car" route="WE"  begin="0" end="999999" vehsPerHour="80"/>
+    <flow id="flow_NE"  type="car" route="NE"  begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_NW"  type="car" route="NW"  begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_SE"  type="car" route="SE"  begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_SW"  type="car" route="SW"  begin="0" end="999999" vehsPerHour="40"/>
+    <flow id="flow_EV_NS" type="emergency" route="NS" begin="200" end="999999" vehsPerHour="1"/>
+    <flow id="flow_EV_EW" type="emergency" route="EW" begin="500" end="999999" vehsPerHour="1"/>
+</routes>

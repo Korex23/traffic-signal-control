@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <!-- Int1: Central 6-arm hub -->
+    <node id="Int1" x="0"    y="0"    type="traffic_light"/>
+
+    <!-- Int2: T-junction North -->
+    <node id="Int2" x="0"    y="350"  type="traffic_light"/>
+
+    <!-- Int3: 5-arm asymmetric West -->
+    <node id="Int3" x="-350" y="0"    type="traffic_light"/>
+
+    <!-- Int4: Asymmetric 4-way East -->
+    <node id="Int4" x="350"  y="0"    type="traffic_light"/>
+
+    <!-- Int5: T-junction South offset -->
+    <node id="Int5" x="-100" y="-350" type="traffic_light"/>
+
+    <!-- Int6: Diagonal offset 4-way -->
+    <node id="Int6" x="280"  y="-280" type="traffic_light"/>
+
+    <!-- Int2 dead ends (T-junction — no South, that connects to Int1) -->
+    <node id="Int2_N" x="0"    y="550"  type="dead_end"/>
+    <node id="Int2_W" x="-200" y="350"  type="dead_end"/>
+    <node id="Int2_E" x="200"  y="350"  type="dead_end"/>
+
+    <!-- Int3 dead ends (5-arm) -->
+    <node id="Int3_N"  x="-350" y="200"  type="dead_end"/>
+    <node id="Int3_W"  x="-550" y="0"    type="dead_end"/>
+    <node id="Int3_S"  x="-350" y="-200" type="dead_end"/>
+    <node id="Int3_NW" x="-490" y="180"  type="dead_end"/>
+
+    <!-- Int4 dead ends (asymmetric 4-way) -->
+    <node id="Int4_N" x="350"  y="200"  type="dead_end"/>
+    <node id="Int4_E" x="550"  y="0"    type="dead_end"/>
+    <node id="Int4_S" x="350"  y="-200" type="dead_end"/>
+
+    <!-- Int5 dead ends (T-junction offset) -->
+    <node id="Int5_S" x="-100" y="-550" type="dead_end"/>
+    <node id="Int5_W" x="-300" y="-350" type="dead_end"/>
+
+    <!-- Int6 dead ends (diagonal 4-way) -->
+    <node id="Int6_N" x="280"  y="-100" type="dead_end"/>
+    <node id="Int6_E" x="480"  y="-280" type="dead_end"/>
+    <node id="Int6_S" x="280"  y="-450" type="dead_end"/>
+</nodes>

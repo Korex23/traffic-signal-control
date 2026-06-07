@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
+    <vType id="emergency" accel="3.0" decel="6.0" sigma="0.0" length="5" maxSpeed="16.67" color="1,0,0"/>
+
+    <!-- Through routes crossing the network -->
+    <route id="W_to_E"  edges="Int3_W2C Int3_Int1 Int1_Int4 Int4_C2E"/>
+    <route id="E_to_W"  edges="Int4_E2C Int4_Int1 Int1_Int3 Int3_C2W"/>
+    <route id="N_to_S"  edges="Int2_N2C Int2_Int1 Int1_Int5 Int5_C2S"/>
+    <route id="S_to_N"  edges="Int5_S2C Int5_Int1 Int1_Int2 Int2_C2N"/>
+
+    <!-- Local routes entering/exiting at each intersection -->
+    <route id="Int2_W_to_N" edges="Int2_W2C Int2_C2N"/>
+    <route id="Int2_E_to_N" edges="Int2_E2C Int2_C2N"/>
+    <route id="Int3_N_to_W" edges="Int3_N2C Int3_C2W"/>
+    <route id="Int3_S_to_W" edges="Int3_S2C Int3_C2W"/>
+    <route id="Int4_N_to_E" edges="Int4_N2C Int4_C2E"/>
+    <route id="Int4_S_to_E" edges="Int4_S2C Int4_C2E"/>
+    <route id="Int5_W_to_S" edges="Int5_W2C Int5_C2S"/>
+    <route id="Int5_E_to_S" edges="Int5_E2C Int5_C2S"/>
+
+    <!-- Emergency vehicle corridor W to E through all intersections -->
+    <route id="EV_corridor" edges="Int3_W2C Int3_Int1 Int1_Int4 Int4_C2E"/>
+
+    <!-- Main through flows -->
+    <flow id="flow_WE"  type="car" route="W_to_E"  begin="0" end="999999" vehsPerHour="150"/>
+    <flow id="flow_EW"  type="car" route="E_to_W"  begin="0" end="999999" vehsPerHour="150"/>
+    <flow id="flow_NS"  type="car" route="N_to_S"  begin="0" end="999999" vehsPerHour="150"/>
+    <flow id="flow_SN"  type="car" route="S_to_N"  begin="0" end="999999" vehsPerHour="150"/>
+
+    <!-- Local flows -->
+    <flow id="flow_Int2_W" type="car" route="Int2_W_to_N" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int2_E" type="car" route="Int2_E_to_N" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int3_N" type="car" route="Int3_N_to_W" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int3_S" type="car" route="Int3_S_to_W" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int4_N" type="car" route="Int4_N_to_E" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int4_S" type="car" route="Int4_S_to_E" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int5_W" type="car" route="Int5_W_to_S" begin="0" end="999999" vehsPerHour="50"/>
+    <flow id="flow_Int5_E" type="car" route="Int5_E_to_S" begin="0" end="999999" vehsPerHour="50"/>
+
+    <!-- Emergency vehicle corridor flow -->
+    <flow id="flow_EV" type="emergency" route="EV_corridor" begin="200" end="999999" vehsPerHour="2"/>
+
+</routes>
