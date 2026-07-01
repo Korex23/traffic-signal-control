@@ -94,30 +94,6 @@ INTERSECTION_POOL = [
         "config": os.path.join("networks", "intersection8", "intersection8.sumocfg"),
     },
     {
-        "id": "intersection9",
-        "tl_ids": ["R1", "R2", "R3", "R4"],
-        "lanes_in": [
-            "N2R1_0", "N2R1_1",
-            "E2R2_0", "E2R2_1",
-            "S2R3_0", "S2R3_1",
-            "W2R4_0", "W2R4_1",
-        ],
-        "num_phases": 2,
-        "config": os.path.join("networks", "intersection9", "intersection9.sumocfg"),
-    },
-    {
-        "id": "intersection10",
-        "tl_ids": ["C1", "C2"],
-        "lanes_in": [
-            "W2C1_0", "W2C1_1",
-            "N1_C1_0", "N1_C1_1",
-            "E2C2_0", "E2C2_1",
-            "S2_C2_0", "S2_C2_1",
-        ],
-        "num_phases": 4,
-        "config": os.path.join("networks", "intersection10", "intersection10.sumocfg"),
-    },
-    {
         "id": "intersection11",
         "tl_ids": ["C"],
         "lanes_in": [
@@ -127,18 +103,6 @@ INTERSECTION_POOL = [
         ],
         "num_phases": 4,
         "config": os.path.join("networks", "intersection11", "intersection11.sumocfg"),
-    },
-    {
-        "id": "intersection12",
-        "tl_ids": ["C", "PW", "PE"],
-        "lanes_in": [
-            "W2PW_0", "W2PW_1", "W2PW_2",
-            "E2PE_0", "E2PE_1", "E2PE_2",
-            "N2C_0", "N2C_1",
-            "S2C_0", "S2C_1",
-        ],
-        "num_phases": 4,
-        "config": os.path.join("networks", "intersection12", "intersection12.sumocfg"),
     },
 ]
 
@@ -192,7 +156,7 @@ EVAL_INTERSECTIONS = [
 
 # ── Constants ──────────────────────────────────────────────────────────────
 STATE_SIZE   = 93
-ALPHA        = 5.0
+ALPHA        = 50.0    # EV priority weight — raised so EV bonus is a meaningful reward term
 BETA         = 0.5
 REWARD_SCALE = 1000.0
 
@@ -209,19 +173,23 @@ class TrafficEnv(gym.Env):
 
     def __init__(
         self,
-        use_gui        = False,
-        episode_length = 3600,
-        scenario       = "default",
-        training_mode  = True,
+        use_gui            = False,
+        episode_length     = 3600,
+        scenario           = "default",
+        training_mode      = True,
+        ports              = None,
+        label_prefix       = "int",
+        demand_scale_range = (0.5, 5.0),
     ):
         super().__init__()
 
-        self.use_gui        = use_gui
-        self.episode_length = episode_length
-        self.scenario       = scenario
-        self.training_mode  = training_mode
-        self.step_count     = 0
-        self.prev_avg_queue = 0.0
+        self.use_gui            = use_gui
+        self.episode_length     = episode_length
+        self.scenario           = scenario
+        self.training_mode      = training_mode
+        self.demand_scale_range = demand_scale_range
+        self.step_count         = 0
+        self.prev_avg_queue     = 0.0
 
         # Action space: 6 phases max across all intersections in pool
         self.action_space = gym.spaces.MultiDiscrete([6, 6, 6])
@@ -231,7 +199,8 @@ class TrafficEnv(gym.Env):
             low=0.0, high=1.0, shape=(93,), dtype=np.float32
         )
 
-        self.ports          = [8813, 8814, 8815]
+        self.ports          = ports if ports is not None else [8813, 8814, 8815]
+        self.labels         = [f"{label_prefix}{i+1}" for i in range(3)]
         self.min_green      = 10
         self.green_timer    = [0, 0, 0]
         self.current_phase  = [0, 0, 0]
@@ -267,12 +236,19 @@ class TrafficEnv(gym.Env):
                 "--end", "999999",
                 "--quit-on-end", "false",
             ]
-            traci.start(sumo_cmd, port=port, label=f"int{i+1}")
+
+            # Demand randomisation: scale all flows by a per-episode factor so the
+            # policy sees the full range of traffic volumes (low → peak) during training.
+            if self.training_mode:
+                scale = random.uniform(*self.demand_scale_range)
+                sumo_cmd += ["--scale", f"{scale:.2f}"]
+
+            traci.start(sumo_cmd, port=port, label=self.labels[i])
 
     def _close_sumo(self):
         for i in range(3):
             try:
-                traci.switch(f"int{i+1}")
+                traci.switch(self.labels[i])
                 traci.close()
             except Exception:
                 pass
@@ -300,7 +276,7 @@ class TrafficEnv(gym.Env):
         state = []
 
         for i in range(3):
-            traci.switch(f"int{i+1}")
+            traci.switch(self.labels[i])
             lanes = self._get_lanes(i)
 
             # Queue lengths — normalised by max 50 vehicles
@@ -367,7 +343,7 @@ class TrafficEnv(gym.Env):
         ev_bonus      = 0.0
 
         for i in range(3):
-            traci.switch(f"int{i+1}")
+            traci.switch(self.labels[i])
             lanes = self._get_lanes(i)
 
             for lane in lanes:
@@ -412,7 +388,7 @@ class TrafficEnv(gym.Env):
         ev_flags = [0, 0, 0]
 
         for i in range(3):
-            traci.switch(f"int{i+1}")
+            traci.switch(self.labels[i])
             action     = int(actions[i])
             max_phases = self._get_max_phases(i)
             tl_ids     = self._get_tl_ids(i)
