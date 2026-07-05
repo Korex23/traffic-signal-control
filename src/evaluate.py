@@ -5,6 +5,15 @@ import traci
 from stable_baselines3 import PPO
 from src.traffic_env import TrafficEnv
 from src.webster_baseline import WebsterBaseline
+from src.max_pressure_baseline import MaxPressureBaseline
+from src.sotl_baseline import SOTLBaseline
+
+# Baseline controllers to compare PPO against. Each exposes get_action(step)/reset().
+BASELINES = {
+    "webster":      ("Webster",  WebsterBaseline),
+    "max_pressure": ("MaxPress", MaxPressureBaseline),
+    "sotl":         ("SOTL",     SOTLBaseline),
+}
 
 # ── Configuration ──────────────────────────────────────────────────────────
 # Prefer the best model (selected by eval reward during training); fall back to
@@ -168,21 +177,21 @@ def run_ppo_trial(model, scale, trial_num):
     }
 
 
-# ── Webster evaluation ──────────────────────────────────────────────────────
+# ── Baseline evaluation (Webster / Max-Pressure / SOTL) ─────────────────────
 
-def run_webster_trial(scale, trial_num):
-    print(f"  Webster Trial {trial_num+1}/{NUM_TRIALS} | scale={scale}")
+def run_baseline_trial(controller_cls, scale, name, trial_num):
+    print(f"  {name} Trial {trial_num+1}/{NUM_TRIALS} | scale={scale}")
 
     env = _make_eval_env(scale)
-    webster = WebsterBaseline()
+    controller = controller_cls()
     obs, _ = env.reset()
-    webster.reset()
+    controller.reset()
 
     waiting_times, queue_lengths, throughputs = [], [], []
     ev_wait = {}
 
     for step in range(EPISODE_LENGTH):
-        action = webster.get_action(step)
+        action = controller.get_action(step)
         obs, reward, done, truncated, info = env.step(action)
 
         w, q, t = collect_metrics()
@@ -243,8 +252,12 @@ def evaluate():
         print("\nRunning PPO agent...")
         ppo_results = [run_ppo_trial(model, scale, t) for t in range(NUM_TRIALS)]
 
-        print("\nRunning Webster baseline...")
-        webster_results = [run_webster_trial(scale, t) for t in range(NUM_TRIALS)]
+        baseline_results = {}
+        for key, (label, cls) in BASELINES.items():
+            print(f"\nRunning {label} baseline...")
+            baseline_results[key] = [
+                run_baseline_trial(cls, scale, label, t) for t in range(NUM_TRIALS)
+            ]
 
         def summarise(results):
             metrics = ["avg_waiting_time", "avg_queue_length",
@@ -257,30 +270,40 @@ def evaluate():
                                   "std":  float(np.std(vals))}
             return summary
 
-        ppo_summary     = summarise(ppo_results)
-        webster_summary = summarise(webster_results)
+        summaries = {"ppo": summarise(ppo_results)}
+        for key, res in baseline_results.items():
+            summaries[key] = summarise(res)
 
-        print(f"\n{'Metric':<25} {'PPO Mean':>12} {'PPO Std':>10} "
-              f"{'Webster Mean':>14} {'Webster Std':>12} {'Improvement':>12}")
-        print("-" * 90)
+        metrics    = ["avg_waiting_time", "avg_queue_length",
+                      "total_throughput", "ev_avg_wait_time"]
+        columns    = ["ppo"] + list(BASELINES.keys())
+        col_labels = {"ppo": "PPO", **{k: v[0] for k, v in BASELINES.items()}}
 
-        for metric in ["avg_waiting_time", "avg_queue_length",
-                       "total_throughput", "ev_avg_wait_time"]:
-            ppo_val = ppo_summary.get(metric, {}).get("mean", 0)
-            ppo_std = ppo_summary.get(metric, {}).get("std", 0)
-            web_val = webster_summary.get(metric, {}).get("mean", 0)
-            web_std = webster_summary.get(metric, {}).get("std", 0)
+        # Means table
+        header = f"{'Metric':<20}" + "".join(f"{col_labels[c]:>12}" for c in columns)
+        print("\n" + header)
+        print("-" * len(header))
+        for m in metrics:
+            row = f"{m:<20}"
+            for c in columns:
+                row += f"{summaries[c].get(m, {}).get('mean', 0):>12.2f}"
+            print(row)
 
-            # Throughput: higher PPO is better. Waiting/queue: lower PPO is better.
-            if metric == "total_throughput":
-                improvement = ((ppo_val - web_val) / web_val) * 100 if web_val > 0 else 0
-            else:
-                improvement = ((web_val - ppo_val) / web_val) * 100 if web_val > 0 else 0
+        # PPO improvement vs each baseline (positive = PPO better)
+        print("\nPPO improvement vs each baseline (positive = PPO better):")
+        for m in metrics:
+            ppo_val = summaries["ppo"].get(m, {}).get("mean", 0)
+            line = f"  {m:<20}"
+            for key in BASELINES:
+                bval = summaries[key].get(m, {}).get("mean", 0)
+                if m == "total_throughput":       # higher is better
+                    imp = ((ppo_val - bval) / bval * 100) if bval else 0
+                else:                              # lower is better
+                    imp = ((bval - ppo_val) / bval * 100) if bval else 0
+                line += f"  {col_labels[key]}: {imp:+6.1f}%"
+            print(line)
 
-            print(f"{metric:<25} {ppo_val:>12.2f} {ppo_std:>10.2f} "
-                  f"{web_val:>14.2f} {web_std:>12.2f} {improvement:>11.1f}%")
-
-        all_results[scenario] = {"ppo": ppo_summary, "webster": webster_summary}
+        all_results[scenario] = summaries
 
     results_path = os.path.join(RESULTS_DIR, "evaluation_results.json")
     with open(results_path, "w") as f:
