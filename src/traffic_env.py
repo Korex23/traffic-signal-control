@@ -180,6 +180,7 @@ class TrafficEnv(gym.Env):
         ports              = None,
         label_prefix       = "int",
         demand_scale_range = (0.5, 5.0),
+        eval_demand_scale  = 1.0,
     ):
         super().__init__()
 
@@ -188,6 +189,7 @@ class TrafficEnv(gym.Env):
         self.scenario           = scenario
         self.training_mode      = training_mode
         self.demand_scale_range = demand_scale_range
+        self.eval_demand_scale  = eval_demand_scale
         self.step_count         = 0
         self.prev_avg_queue     = 0.0
 
@@ -237,11 +239,14 @@ class TrafficEnv(gym.Env):
                 "--quit-on-end", "false",
             ]
 
-            # Demand randomisation: scale all flows by a per-episode factor so the
-            # policy sees the full range of traffic volumes (low → peak) during training.
+            # Demand scaling via SUMO --scale.
+            #   training: random factor per episode (domain randomisation, low → peak)
+            #   eval:     fixed factor so demand scenarios are controlled/reproducible
             if self.training_mode:
                 scale = random.uniform(*self.demand_scale_range)
-                sumo_cmd += ["--scale", f"{scale:.2f}"]
+            else:
+                scale = self.eval_demand_scale
+            sumo_cmd += ["--scale", f"{scale:.2f}"]
 
             traci.start(sumo_cmd, port=port, label=self.labels[i])
 
