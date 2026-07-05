@@ -59,13 +59,12 @@ INTERSECTIONS = [
 
 # ── Metric collection ───────────────────────────────────────────────────────
 
-def collect_metrics(step):
-    """Collect metrics from all 3 eval intersections at the current step."""
+def collect_metrics():
+    """Snapshot the continuous metrics (waiting, queue, throughput) at this step."""
     total_waiting    = 0.0
     total_vehicles   = 0
     total_queue      = 0.0
     total_throughput = 0
-    ev_clearance     = None
 
     for i, intersection in enumerate(INTERSECTIONS):
         traci.switch(f"int{i+1}")
@@ -91,18 +90,35 @@ def collect_metrics(step):
         except Exception:
             pass
 
-        # EV clearance time
-        try:
-            for lane in lanes:
-                for v in traci.lane.getLastStepVehicleIDs(lane):
-                    if traci.vehicle.getTypeID(v) == "emergency":
-                        ev_clearance = step
-        except Exception:
-            pass
-
     avg_waiting = total_waiting / total_vehicles if total_vehicles > 0 else 0.0
 
-    return avg_waiting, total_queue, total_throughput, ev_clearance
+    return avg_waiting, total_queue, total_throughput
+
+
+def track_ev_waiting(ev_wait):
+    """Update per-emergency-vehicle accumulated waiting time.
+
+    For every emergency vehicle currently on a monitored approach lane, record
+    its accumulated waiting time (total seconds spent stopped so far this trip;
+    requires SUMO --waiting-time-memory large enough, set in TrafficEnv). We keep
+    the maximum value seen per vehicle, so once the EV crosses and disappears we
+    retain its final total waiting-to-clear. Keyed by (intersection_index, veh_id)
+    because the 3 SUMO instances have independent vehicle IDs.
+
+    Lower mean value = the controller cleared emergency vehicles faster.
+    """
+    for i, intersection in enumerate(INTERSECTIONS):
+        traci.switch(f"int{i+1}")
+        for lane in intersection["lanes_in"]:
+            try:
+                for v in traci.lane.getLastStepVehicleIDs(lane):
+                    if traci.vehicle.getTypeID(v) == "emergency":
+                        w   = traci.vehicle.getAccumulatedWaitingTime(v)
+                        key = (i, v)
+                        if w >= ev_wait.get(key, 0.0):
+                            ev_wait[key] = w
+            except Exception:
+                pass
 
 
 def _make_eval_env(scale):
@@ -124,29 +140,31 @@ def run_ppo_trial(model, scale, trial_num):
     env = _make_eval_env(scale)
     obs, _ = env.reset()
 
-    waiting_times, queue_lengths, throughputs, ev_times = [], [], [], []
+    waiting_times, queue_lengths, throughputs = [], [], []
+    ev_wait = {}
 
     for step in range(EPISODE_LENGTH):
         action, _ = model.predict(obs, deterministic=True)
         obs, reward, done, truncated, info = env.step(action)
 
-        w, q, t, ev = collect_metrics(step)
+        w, q, t = collect_metrics()
         waiting_times.append(w)
         queue_lengths.append(q)
         throughputs.append(t)
-        if ev is not None:
-            ev_times.append(ev)
+        track_ev_waiting(ev_wait)
 
         if done:
             break
 
     env.close()
 
+    ev_vals = list(ev_wait.values())
     return {
-        "avg_waiting_time":  float(np.mean(waiting_times)),
-        "avg_queue_length":  float(np.mean(queue_lengths)),
-        "total_throughput":  int(sum(throughputs)),
-        "ev_clearance_time": float(np.mean(ev_times)) if ev_times else None,
+        "avg_waiting_time":   float(np.mean(waiting_times)),
+        "avg_queue_length":   float(np.mean(queue_lengths)),
+        "total_throughput":   int(sum(throughputs)),
+        "ev_avg_wait_time":   float(np.mean(ev_vals)) if ev_vals else None,
+        "ev_count":           len(ev_vals),
     }
 
 
@@ -160,29 +178,31 @@ def run_webster_trial(scale, trial_num):
     obs, _ = env.reset()
     webster.reset()
 
-    waiting_times, queue_lengths, throughputs, ev_times = [], [], [], []
+    waiting_times, queue_lengths, throughputs = [], [], []
+    ev_wait = {}
 
     for step in range(EPISODE_LENGTH):
         action = webster.get_action(step)
         obs, reward, done, truncated, info = env.step(action)
 
-        w, q, t, ev = collect_metrics(step)
+        w, q, t = collect_metrics()
         waiting_times.append(w)
         queue_lengths.append(q)
         throughputs.append(t)
-        if ev is not None:
-            ev_times.append(ev)
+        track_ev_waiting(ev_wait)
 
         if done:
             break
 
     env.close()
 
+    ev_vals = list(ev_wait.values())
     return {
-        "avg_waiting_time":  float(np.mean(waiting_times)),
-        "avg_queue_length":  float(np.mean(queue_lengths)),
-        "total_throughput":  int(sum(throughputs)),
-        "ev_clearance_time": float(np.mean(ev_times)) if ev_times else None,
+        "avg_waiting_time":   float(np.mean(waiting_times)),
+        "avg_queue_length":   float(np.mean(queue_lengths)),
+        "total_throughput":   int(sum(throughputs)),
+        "ev_avg_wait_time":   float(np.mean(ev_vals)) if ev_vals else None,
+        "ev_count":           len(ev_vals),
     }
 
 
@@ -228,7 +248,7 @@ def evaluate():
 
         def summarise(results):
             metrics = ["avg_waiting_time", "avg_queue_length",
-                       "total_throughput", "ev_clearance_time"]
+                       "total_throughput", "ev_avg_wait_time"]
             summary = {}
             for m in metrics:
                 vals = [r[m] for r in results if r[m] is not None]
@@ -244,7 +264,8 @@ def evaluate():
               f"{'Webster Mean':>14} {'Webster Std':>12} {'Improvement':>12}")
         print("-" * 90)
 
-        for metric in ["avg_waiting_time", "avg_queue_length", "total_throughput"]:
+        for metric in ["avg_waiting_time", "avg_queue_length",
+                       "total_throughput", "ev_avg_wait_time"]:
             ppo_val = ppo_summary.get(metric, {}).get("mean", 0)
             ppo_std = ppo_summary.get(metric, {}).get("std", 0)
             web_val = webster_summary.get(metric, {}).get("mean", 0)

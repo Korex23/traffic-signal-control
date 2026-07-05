@@ -237,6 +237,11 @@ class TrafficEnv(gym.Env):
                 "--time-to-teleport", "-1",
                 "--end", "999999",
                 "--quit-on-end", "false",
+                # Remember waiting time over the whole episode so per-vehicle
+                # accumulated waiting (used for the EV clearance metric) is total,
+                # not just the default 100s window. Harmless for training reward,
+                # which uses per-lane (not per-vehicle) waiting.
+                "--waiting-time-memory", "10000",
             ]
 
             # Demand scaling via SUMO --scale.
